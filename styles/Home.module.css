@@ -1,3 +1,13 @@
+/* in files with .module.css you can define classes that only apply to a specific route or component, and you don't have to worry about coming
+up with a bunch of unique class names or
+naming conventions when managing your
+styles. If you want to use styles from a certain
+module you just import the style sheet
+in your javascript
+then reference your styles in jsx as if
+the styles were a javascript object.
+<div className={styles.container}> */
+
 .container {
   padding: 0 2rem;
 }
