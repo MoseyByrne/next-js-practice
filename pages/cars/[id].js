@@ -8,10 +8,59 @@
 
 import { useRouter } from "next/router"; // useRouter hook allows us to access the query parameters from the url
 
-export default function Car() {
+import Head from "next/head";
+
+export default function Car({ car }) { // use the prop here
 
   const router = useRouter()
   const { id } = router.query
 
-  return <h1>Hello {id}</h1>
+  return (<>
+    <Head>
+      <title>{car.color}</title>
+    </Head>
+    <h1>Hello {id}</h1>
+    <img src={car.image} />
+  </>)
 }
+
+// for Server-Side Rendering
+export async function getServerSideProps({ params }) {
+
+  const req = await fetch(`http://localhost:3000/${params.id}.json}`);
+  const data = await reg.json();
+
+  return {
+    props: { car: data },
+  }
+}
+
+// getStaticProps() tells next to prerender page
+
+// export async function getStaticProps({ params }) {
+
+//   const req = await fetch(`http://localhost:3000/${params.id}.json}`);
+//   const data = await reg.json();
+
+//   return {
+//     props: { car: data },
+//   }
+// }
+
+// getStaticPaths() tell next which dynamic pages to render
+
+// export async function getStaticPaths() {
+
+//   const req = await fetch(`http://localhost:3000/${params.id}.json}`);
+//   const data = await reg.json();
+
+//   const paths = data.map(car => {
+//     return { params: { id: car } }
+//   })
+
+//   return {
+//     paths,
+//     fallback: false
+//   };
+
+// }
