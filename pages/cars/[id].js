@@ -9,29 +9,37 @@
 import { useRouter } from "next/router"; // useRouter hook allows us to access the query parameters from the url
 
 import Head from "next/head";
+import styles from '../../styles/Home.module.css';
 
 export default function Car({ car }) { // use the prop here
 
   const router = useRouter()
   const { id } = router.query
+  return (
+      <div className={styles.container}>
+          <Head>
+              <title>{car.color} {car.id}</title>
+          </Head>
 
-  return (<>
-    <Head>
-      <title>{car.color}</title>
-    </Head>
-    <h1>Hello {id}</h1>
-    <img src={car.image} />
-  </>)
+          <main className={styles.main}>
+              <h1 className={styles.title}>
+                  {id}
+              </h1>
+
+              <img src={car.image} alt='' width="300px" />
+
+          </main>
+      </div>
+  )
 }
 
 // for Server-Side Rendering
 export async function getServerSideProps({ params }) {
-
-  const req = await fetch(`http://localhost:3000/${params.id}.json}`);
-  const data = await reg.json();
+  const req = await fetch(`http://localhost:3000/${params.id}.json`);
+  const data = await req.json();
 
   return {
-    props: { car: data },
+      props: { car: data },
   }
 }
 
